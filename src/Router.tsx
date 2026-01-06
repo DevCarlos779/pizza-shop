@@ -15,7 +15,7 @@ export function Router() {
             <Route path="/" element={<AppLayout />}>
                 <Route path="/" element={<Dashboard />} />
             </Route>
-            <Route path="/sign-in" element={<AuthLayout />}>
+            <Route path="/" element={<AuthLayout />}>
                 <Route path="/sign-in" element={<SignIn />} />
             </Route>
             
