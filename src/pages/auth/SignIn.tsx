@@ -1,11 +1,49 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
+
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 
 export function SignIn() {
+
+    const signInForm = z.object({
+        email: z.string().email(),
+    })
+
+    type SignInForm = z.infer<typeof signInForm>;
+
+    const {register, handleSubmit, formState: {isSubmitting}} = useForm<SignInForm>();
+
+    async function handleSignIn(data: SignInForm) {
+        console.log(data);
+
+        await new Promise((resolve) => setTimeout(resolve, 200));
+
+    }
+
     return(
         <>
-            <Helmet title="Auth" />
-            <h1>SignIn</h1>
+            <Helmet title="Login" />
+            <div className="p-8">
+                <div className="w-[350px] flex flex-col justify-center gap-6">
+                    <div className="flex flex-col text-center">
+                        <h1 className="text-2xl font-semibold tracking-tight">Acessar Painel</h1>
+                        <p className="text-sm text-muted-foreground">Acompanhe suas vendas pelo painel do parceiro!</p>
+                    </div>
+
+                    <form className="space-y-4" onSubmit={handleSubmit(handleSignIn)}>
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Seu e-mail</Label>
+                            <Input id="email" type="email" {...register('email')}/>
+                        </div>
+
+                        <Button disabled={isSubmitting} type="submit" className="w-full">Acessar painel</Button>
+                    </form>
+                </div>
+            </div>
         </>
     )
 }
